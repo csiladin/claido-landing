@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claido Systems — Never Miss Another Booked Job</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg0:     #05050d;
+      --bg1:     #08081a;
+      --bg2:     #0c0c1c;
+      --bg3:     #101028;
+      --border:  rgba(255,255,255,0.065);
+      --border2: rgba(255,255,255,0.11);
+      --text:    #eceeff;
+      --text2:   #7d7b9e;
+      --text3:   #3e3c58;
+      --purple:  #7857ff;
+      --purple2: #9b79ff;
+      --purple3: #c4a8ff;
+      --blue:    #4a8fff;
+      --green:   #3dcc8c;
+      --amber:   #f59e0b;
+      --red:     #f87171;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg0);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain */
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 999; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.017; background-size: 200px;
+    }
+
+    /* ── Scroll reveal ── */
+    .sr { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+    .sr.up { opacity: 1; transform: none; }
+    .d1 { transition-delay: .07s; }
+    .d2 { transition-delay: .14s; }
+    .d3 { transition-delay: .21s; }
+    .d4 { transition-delay: .28s; }
+
+    /* ── Orb ── */
+    .orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); }
+
+    /* ── Wrap ── */
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Icons ── */
+    .ico { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ico svg { display: block; }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
+      display: flex; align-items: center;
+      backdrop-filter: blur(24px) saturate(160%);
+      background: rgba(5,5,13,0.84);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1060px; margin: 0 auto; padding: 0 2rem; width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 15px; font-weight: 800; letter-spacing: -0.03em; color: var(--text);
+      text-decoration: none; display: flex; align-items: center; gap: 9px;
+    }
+    .nav-logo-mark {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      box-shadow: 0 0 12px rgba(120,87,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-mark svg { color: #fff; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 500; color: var(--text2); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      letter-spacing: -0.01em; text-decoration: none; cursor: pointer;
+      border: none; outline: none; border-radius: 10px;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+      white-space: nowrap;
+    }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .btn-solid {
+      background: linear-gradient(135deg, #7857ff 0%, #5438e6 100%);
+      color: #fff; padding: 12px 22px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1) inset, 0 4px 20px rgba(120,87,255,0.3);
+    }
+    .btn-solid:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.14) inset, 0 8px 28px rgba(120,87,255,0.5);
+    }
+
+    .btn-solid-lg {
+      padding: 15px 30px; font-size: 15px; border-radius: 12px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 6px 28px rgba(120,87,255,0.32);
+    }
+    .btn-solid-lg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.16) inset, 0 12px 40px rgba(120,87,255,0.55);
+    }
+
+    .btn-outline {
+      background: transparent; color: var(--text2);
+      padding: 12px 22px; border: 1px solid var(--border2);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
+
+    .btn-outline-lg { padding: 15px 28px; font-size: 15px; border-radius: 12px; }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh; padding: 150px 2rem 110px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .hero .o1 { width: 800px; height: 700px; background: radial-gradient(circle, rgba(120,87,255,0.19) 0%, transparent 65%); top: -200px; left: 50%; transform: translateX(-50%); }
+    .hero .o2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(74,143,255,0.12) 0%, transparent 70%); bottom: 60px; right: -80px; }
+    .hero .o3 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(196,168,255,0.1) 0%, transparent 70%); bottom: 100px; left: -60px; }
+
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 100%);
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+    .hero-trade-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+      color: var(--text3); text-transform: uppercase;
+      margin-bottom: 2.25rem;
+    }
+    .hero-trade-tag span { color: var(--text2); }
+    .hero-trade-tag .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 5.4rem);
+      font-weight: 900; line-height: 1.03;
+      letter-spacing: -0.05em; color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .g {
+      background: linear-gradient(125deg, var(--purple3) 0%, var(--purple) 45%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.12rem); color: var(--text2);
+      max-width: 520px; margin: 0 auto 2.75rem;
+      line-height: 1.78; font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap; margin-bottom: 3rem;
+    }
+
+    .hero-proof {
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .hero-proof-item { text-align: center; }
+    .hero-proof-num {
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+      color: var(--text); margin-bottom: 3px;
+    }
+    .hero-proof-label { font-size: 12px; color: var(--text3); font-weight: 500; }
+    .hero-proof-div { width: 1px; height: 32px; background: var(--border2); }
+
+    /* ═══════════════════════════════════════
+       PROBLEM
+    ═══════════════════════════════════════ */
+    .problem {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .problem .op { width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(248,113,113,0.06) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .problem-inner { position: relative; z-index: 1; }
+
+    .problem-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .problem-eyebrow {
+      font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--red); opacity: .75; margin-bottom: 1.25rem;
+    }
+    .problem-copy h2 {
+      font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.1; color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .problem-copy h2 em { font-style: normal; color: var(--amber); }
+    .problem-copy p {
+      font-size: 15px; color: var(--text2); line-height: 1.78; margin-bottom: 1.25rem;
+    }
+    .problem-copy p:last-child { margin-bottom: 0; }
+
+    .problem-stats { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+    .prob-stat-row {
+      background: var(--bg2); padding: 1.75rem 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      transition: background .2s;
+    }
+    .prob-stat-row:hover { background: var(--bg3); }
+    .prob-stat-num {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1;
+      flex-shrink: 0; min-width: 90px;
+    }
+    .prob-stat-num.r { color: var(--red); }
+    .prob-stat-num.a { color: var(--amber); }
+    .prob-stat-num.b {
+      background: linear-gradient(135deg, var(--purple2), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .prob-stat-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .prob-stat-text span  { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+    /* ═══════════════════════════════════════
+       HOW IT WORKS
+    ═══════════════════════════════════════ */
+    .hiw {
+      background: var(--bg0); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .hiw .oh { width: 700px; height: 500px; background: radial-gradient(ellipse, rgba(120,87,255,0.09) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .hiw-inner { position: relative; z-index: 1; }
+
+    .hiw-head { margin-bottom: 3.5rem; max-width: 560px; }
+    .hiw-head h2 {
+      font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.1; color: var(--text);
+      margin-bottom: .75rem; margin-top: .6rem;
+    }
+    .hiw-head h2 em { font-style: normal; color: var(--amber); }
+    .hiw-head p { font-size: 15px; color: var(--text2); line-height: 1.72; }
+    .eyebrow {
+      font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--purple3); display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow::before { content: ''; width: 16px; height: 1px; background: currentColor; }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+    }
+    .step-card {
+      background: var(--bg2); padding: 2.25rem 1.75rem;
+      position: relative; overflow: hidden; transition: background .25s;
+    }
+    .step-card:hover { background: var(--bg3); }
+    .step-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(120,87,255,0.06) 0%, transparent 55%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .step-card:hover::before { opacity: 1; }
+    .step-card-num {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; color: var(--text3);
+      text-transform: uppercase; margin-bottom: 1.25rem;
+    }
+    .step-icon-wrap {
+      width: 46px; height: 46px; border-radius: 13px; margin-bottom: 1.25rem;
+      background: rgba(120,87,255,0.1); border: 1px solid rgba(120,87,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--purple2);
+      transition: background .3s, border-color .3s, box-shadow .3s;
+    }
+    .step-card:hover .step-icon-wrap {
+      background: rgba(120,87,255,0.18); border-color: rgba(120,87,255,0.4);
+      box-shadow: 0 0 18px rgba(120,87,255,0.18);
+    }
+    .step-card h3 {
+      font-size: .95rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: .4rem;
+    }
+    .step-card p { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+    /* Connector line between steps */
+    .step-connector {
+      position: absolute; top: 57px; right: -1px; width: 1px; height: 18px;
+      background: linear-gradient(180deg, transparent, rgba(120,87,255,0.4), transparent);
+    }
+
+    /* ═══════════════════════════════════════
+       FEATURES / SYSTEM
+    ═══════════════════════════════════════ */
+    .features {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .features .of { width: 600px; height: 600px; background: radial-gradient(circle, rgba(74,143,255,0.08) 0%, transparent 70%); top: -80px; right: -100px; }
+    .features-inner { position: relative; z-index: 1; }
+    .features-head { margin-bottom: 3rem; max-width: 560px; }
+    .features-head h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--text); margin-bottom: .75rem; margin-top: .6rem; }
+    .features-head h2 em { font-style: normal; color: var(--amber); }
+    .features-head p { font-size: 15px; color: var(--text2); line-height: 1.72; }
+
+    /* Bento grid — asymmetric */
+    .bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 22px; overflow: hidden;
+    }
+    .bento-main {
+      grid-column: 1 / -1; /* full width top card */
+      background: var(--bg2); padding: 2.75rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center;
+      position: relative; overflow: hidden; transition: background .25s;
+    }
+    .bento-main:hover { background: var(--bg3); }
+    .bento-main::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(120,87,255,0.5), transparent);
+    }
+    .bento-main-copy h3 {
+      font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text);
+      margin-bottom: .6rem; margin-top: .6rem; line-height: 1.2;
+    }
+    .bento-main-copy p { font-size: 14.5px; color: var(--text2); line-height: 1.75; }
+    .bento-main-tag {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--purple3);
+    }
+    .bento-main-visual {
+      background: rgba(120,87,255,0.06); border: 1px solid rgba(120,87,255,0.12);
+      border-radius: 14px; padding: 1.5rem;
+    }
+    .sms-preview { display: flex; flex-direction: column; gap: 8px; }
+    .sms-notif {
+      background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.15);
+      border-radius: 10px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sms-notif-icon {
+      width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+      background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.2);
+      display: flex; align-items: center; justify-content: center; color: var(--red);
+    }
+    .sms-notif strong { display: block; font-size: 12px; font-weight: 600; color: var(--red); }
+    .sms-notif span   { font-size: 11px; color: var(--text3); }
+    .sms-bubble-row { display: flex; }
+    .sms-bubble-row.out { justify-content: flex-end; }
+    .sms-bubble {
+      max-width: 80%; padding: 9px 14px; font-size: 12.5px; line-height: 1.5;
+      border-radius: 16px;
+    }
+    .sms-bubble.out {
+      background: linear-gradient(135deg, var(--purple), #5438e6);
+      color: #fff; border-bottom-right-radius: 4px;
+    }
+    .sms-bubble.in {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.09);
+      color: var(--text); border-bottom-left-radius: 4px;
+    }
+    .sms-booked {
+      display: flex; align-items: center; gap: 8px; justify-content: center;
+      background: rgba(61,204,140,0.08); border: 1px solid rgba(61,204,140,0.18);
+      border-radius: 8px; padding: 8px 12px;
+    }
+    .sms-booked-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: bdot 2s ease infinite; }
+    @keyframes bdot { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .sms-booked span { font-size: 12px; font-weight: 600; color: var(--green); }
+
+    .bento-card {
+      background: var(--bg2); padding: 2.25rem 2rem;
+      position: relative; overflow: hidden; transition: background .25s;
+    }
+    .bento-card:hover { background: var(--bg3); }
+    .bento-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(120,87,255,0.05) 0%, transparent 50%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .bento-card:hover::after { opacity: 1; }
+    .bento-card-icon {
+      width: 44px; height: 44px; border-radius: 12px; margin-bottom: 1.25rem;
+      background: rgba(120,87,255,0.1); border: 1px solid rgba(120,87,255,0.18);
+      display: flex; align-items: center; justify-content: center; color: var(--purple2);
+      transition: background .3s, border-color .3s;
+    }
+    .bento-card:hover .bento-card-icon { background: rgba(120,87,255,0.18); border-color: rgba(120,87,255,0.38); }
+    .bento-card h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: .45rem; }
+    .bento-card p  { font-size: 13.5px; color: var(--text2); line-height: 1.68; }
+
+    /* ═══════════════════════════════════════
+       RESULTS
+    ═══════════════════════════════════════ */
+    .results {
+      background: var(--bg0); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .results .or1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(61,204,140,0.07) 0%, transparent 70%); bottom: -80px; right: -60px; }
+    .results .or2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(120,87,255,0.09) 0%, transparent 70%); top: -40px; left: -60px; }
+    .results-inner { position: relative; z-index: 1; }
+    .results-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4.5rem; align-items: start; margin-top: 3.5rem; }
+
+    .results-copy h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--text); margin-bottom: 1rem; margin-top: .6rem; }
+    .results-copy h2 em { font-style: normal; color: var(--amber); }
+    .results-copy p { font-size: 15px; color: var(--text2); line-height: 1.78; margin-bottom: 1.75rem; }
+
+    .outcomes { display: flex; flex-direction: column; gap: .5rem; }
+    .outcome {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: .875rem 1.125rem; border-radius: 11px;
+      border: 1px solid var(--border); transition: border-color .2s;
+    }
+    .outcome:hover { border-color: rgba(61,204,140,0.22); }
+    .outcome-mark {
+      width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0; margin-top: 2px;
+      background: rgba(61,204,140,0.1); border: 1px solid rgba(61,204,140,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green);
+    }
+    .outcome strong { display: block; font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 1px; }
+    .outcome span   { font-size: 12.5px; color: var(--text2); line-height: 1.5; }
+
+    .metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+    }
+    .metric {
+      background: var(--bg2); padding: 1.75rem 1.5rem;
+      position: relative; overflow: hidden; transition: background .2s;
+    }
+    .metric:hover { background: var(--bg3); }
+    .metric::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      opacity: 0; transition: opacity .3s;
+    }
+    .metric:hover::before { opacity: 1; }
+    .metric-val {
+      font-size: 2.5rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1;
+      margin-bottom: .3rem;
+    }
+    .metric-val.p { background: linear-gradient(135deg, var(--purple2), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .metric-val.g { color: var(--green); }
+    .metric-val.a { color: var(--amber); }
+    .metric-val.w { color: var(--text); }
+    .metric-lbl { font-size: 12.5px; color: var(--text2); font-weight: 500; line-height: 1.4; }
+
+    /* ═══════════════════════════════════════
+       OFFER
+    ═══════════════════════════════════════ */
+    .offer {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .offer .oo { width: 700px; height: 500px; background: radial-gradient(ellipse, rgba(120,87,255,0.11) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .offer-inner { position: relative; z-index: 1; }
+    .offer-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4.5rem; align-items: center; margin-top: 3.5rem; }
+
+    .offer-copy h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--text); margin-bottom: 1rem; margin-top: .6rem; }
+    .offer-copy h2 em { font-style: normal; color: var(--amber); }
+    .offer-copy p { font-size: 15px; color: var(--text2); line-height: 1.78; margin-bottom: 1.75rem; }
+
+    .offer-rows { display: flex; flex-direction: column; gap: .625rem; }
+    .offer-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 1.1rem 1.35rem; border-radius: 13px;
+      background: var(--bg2); border: 1px solid var(--border2);
+      transition: border-color .2s, transform .18s;
+    }
+    .offer-row:hover { border-color: rgba(120,87,255,0.32); transform: translateX(4px); }
+    .offer-row-icon {
+      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(120,87,255,0.1); border: 1px solid rgba(120,87,255,0.2);
+      display: flex; align-items: center; justify-content: center; color: var(--purple2);
+    }
+    .offer-row-icon svg { width: 16px; height: 16px; }
+    .offer-row h4 { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .offer-row p  { font-size: 12.5px; color: var(--text2); line-height: 1.5; }
+
+    .offer-panel {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 22px; padding: 2.5rem 2.25rem;
+      position: relative; overflow: hidden;
+    }
+    .offer-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(120,87,255,0.55), transparent);
+    }
+    .offer-panel-glow {
+      position: absolute; top: -70px; left: 50%; transform: translateX(-50%);
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(120,87,255,0.16) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .offer-panel-inner { position: relative; z-index: 1; }
+    .offer-panel h3 {
+      font-size: 1.45rem; font-weight: 800; letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: .6rem; line-height: 1.2;
+    }
+    .offer-panel p { font-size: 14px; color: var(--text2); margin-bottom: 1.75rem; line-height: 1.72; }
+
+    .offer-list { list-style: none; margin-bottom: 2rem; display: flex; flex-direction: column; gap: .55rem; }
+    .offer-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--text2); font-weight: 500; line-height: 1.5;
+    }
+    .offer-list-mark {
+      width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; margin-top: 1px;
+      background: rgba(61,204,140,0.1); border: 1px solid rgba(61,204,140,0.22);
+      display: flex; align-items: center; justify-content: center; color: var(--green);
+    }
+    .offer-list-mark svg { width: 10px; height: 10px; }
+
+    .offer-note { font-size: 12px; color: var(--text3); text-align: center; margin-top: .875rem; }
+
+    /* ═══════════════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════════════ */
+    .finale {
+      background: var(--bg0); border-top: 1px solid var(--border);
+      padding: 8rem 2rem; text-align: center;
+      overflow: hidden; position: relative;
+    }
+    .finale .fc1 { width: 700px; height: 600px; background: radial-gradient(circle, rgba(120,87,255,0.18) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .finale .fc2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(74,143,255,0.09) 0%, transparent 70%); top: -50px; right: -50px; }
+    .finale .fc3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%); bottom: -30px; left: 0; }
+    .finale-inner { position: relative; z-index: 1; max-width: 660px; margin: 0 auto; }
+
+    .finale-kicker {
+      font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 1.5rem; display: block;
+    }
+    .finale h2 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900; letter-spacing: -0.05em; line-height: 1.04;
+      color: var(--text); margin-bottom: 1.25rem;
+    }
+    .finale h2 .g {
+      background: linear-gradient(125deg, var(--purple3) 0%, var(--purple) 45%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .finale p { font-size: 16px; color: var(--text2); margin-bottom: 2.75rem; line-height: 1.72; }
+    .finale-btns { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .finale-footnote {
+      font-size: 12.5px; color: var(--text3); margin-top: 1.75rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.25rem; flex-wrap: wrap;
+    }
+    .finale-footnote span { display: flex; align-items: center; gap: 5px; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 1.75rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer p { font-size: 12px; color: var(--text3); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    /* ═══════════════════════════════════════
+       LIVE DEMO
+    ═══════════════════════════════════════ */
+    .live-demo {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 5.5rem 2rem; overflow: hidden; position: relative;
+    }
+    .live-demo .ld1 {
+      width: 700px; height: 600px;
+      background: radial-gradient(circle, rgba(120,87,255,0.15) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+    .live-demo .ld2 {
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(74,143,255,0.1) 0%, transparent 70%);
+      top: -60px; right: -80px;
+    }
+    .demo-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; text-align: center; }
+    .demo-inner .eyebrow { justify-content: center; margin-bottom: 1rem; }
+    .demo-inner h2 {
+      font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.1; color: var(--text);
+      margin-bottom: .9rem;
+    }
+    .demo-inner h2 em { font-style: normal; color: var(--amber); }
+    .demo-inner > p {
+      font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 2.5rem;
+    }
+
+    .demo-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 22px; padding: 2.5rem;
+      position: relative; overflow: hidden;
+      text-align: left;
+    }
+    .demo-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(120,87,255,0.55), transparent);
+    }
+    .demo-card-glow {
+      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(120,87,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .demo-form { position: relative; z-index: 1; }
+
+    .demo-label {
+      display: block; font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: .5rem; letter-spacing: -0.01em;
+    }
+
+    .phone-row {
+      display: flex; gap: 10px; margin-bottom: .75rem;
+    }
+    .phone-prefix {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg3); border: 1px solid var(--border2);
+      border-radius: 10px; padding: 0 14px; height: 50px; flex-shrink: 0;
+      font-size: 14px; font-weight: 600; color: var(--text2); white-space: nowrap;
+      transition: border-color .2s;
+      cursor: default; user-select: none;
+    }
+    .phone-prefix svg { width: 14px; height: 14px; }
+
+    .phone-input {
+      flex: 1; height: 50px;
+      background: var(--bg3); color: var(--text);
+      border: 1px solid var(--border2); border-radius: 10px;
+      padding: 0 16px; font-size: 15px; font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      width: 100%;
+    }
+    .phone-input::placeholder { color: var(--text3); }
+    .phone-input:focus {
+      border-color: rgba(120,87,255,0.55);
+      box-shadow: 0 0 0 3px rgba(120,87,255,0.12);
+    }
+    .phone-input.input-error {
+      border-color: rgba(248,113,113,0.55);
+      box-shadow: 0 0 0 3px rgba(248,113,113,0.1);
+    }
+
+    .demo-error-msg {
+      display: none; font-size: 13px; color: var(--red);
+      margin-bottom: .75rem; padding: 8px 12px;
+      background: rgba(248,113,113,0.07); border: 1px solid rgba(248,113,113,0.18);
+      border-radius: 8px;
+    }
+
+    .demo-btn {
+      width: 100%; height: 50px; border-radius: 10px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--purple) 0%, #5438e6 100%);
+      color: #fff; font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      transition: transform .18s, box-shadow .18s, opacity .18s;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1) inset, 0 4px 28px rgba(120,87,255,0.38);
+      position: relative; overflow: hidden;
+    }
+    .demo-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+      opacity: 0; transition: opacity .2s;
+    }
+    .demo-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.14) inset, 0 8px 36px rgba(120,87,255,0.55);
+    }
+    .demo-btn:hover::after { opacity: 1; }
+    .demo-btn:active:not(:disabled) { transform: translateY(0); }
+    .demo-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+    .demo-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-spinner {
+      width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-top-color: #fff;
+      animation: spin .65s linear infinite;
+    }
+
+    .demo-privacy {
+      font-size: 12px; color: var(--text3); text-align: center; margin-top: .75rem;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .demo-privacy svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* Success state */
+    .demo-success {
+      display: none; opacity: 0;
+      transition: opacity .45s cubic-bezier(.16,1,.3,1);
+    }
+    .demo-success.show { display: block; }
+    .demo-success.visible { opacity: 1; }
+
+    .success-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem;
+    }
+    .success-icon {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(61,204,140,0.12); border: 1px solid rgba(61,204,140,0.28);
+      display: flex; align-items: center; justify-content: center; color: var(--green);
+    }
+    .success-icon svg { width: 18px; height: 18px; }
+    .success-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .success-sub   { font-size: 13px; color: var(--text2); }
+
+    .success-sms {
+      background: rgba(120,87,255,0.06); border: 1px solid rgba(120,87,255,0.14);
+      border-radius: 14px; padding: 1.25rem; margin-top: .25rem;
+    }
+    .success-sms-label {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: .875rem;
+    }
+    .success-bubble-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+    .success-bubble {
+      background: linear-gradient(135deg, var(--purple), #5438e6);
+      color: #fff; padding: 10px 15px; border-radius: 16px; border-bottom-right-radius: 4px;
+      font-size: 13.5px; line-height: 1.5; max-width: 85%;
+    }
+    .success-delivered {
+      display: flex; align-items: center; justify-content: flex-end; gap: 5px;
+      font-size: 11px; color: var(--green); margin-top: 4px;
+    }
+    .success-delivered svg { width: 12px; height: 12px; }
+
+    .demo-reset {
+      display: block; width: 100%; margin-top: .875rem;
+      background: transparent; border: 1px solid var(--border2);
+      color: var(--text2); font-family: 'Inter', sans-serif;
+      font-size: 13.5px; font-weight: 500; border-radius: 10px;
+      padding: 11px; cursor: pointer; transition: border-color .2s, color .2s;
+    }
+    .demo-reset:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
+
+    @media (max-width: 900px) {
+      .problem-layout, .results-layout, .offer-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .bento-main { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 120px 1.5rem 80px; }
+      .problem, .hiw, .features, .results, .offer, .live-demo, .finale { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .wrap { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .nav-inner { padding: 0 1.5rem; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .bento { grid-template-columns: 1fr; }
+      .bento-main { grid-column: 1 / -1; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .hero-proof-div { display: none; }
+      .footer { flex-direction: column; text-align: center; padding: 1.5rem; }
+      .demo-card { padding: 1.75rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      Claido
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#system">The system</a></li>
+      <li><a href="#demo">Get a demo</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#demo" class="btn btn-outline">See a demo</a>
+      <a href="#demo" class="btn btn-solid">
+        Book a call
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-trade-tag sr">
+      <span>HVAC</span><div class="dot"></div>
+      <span>Plumbing</span><div class="dot"></div>
+      <span>Roofing</span><div class="dot"></div>
+      <span>Electrical</span>
+    </div>
+
+    <h1 class="sr d1">
+      You're On The Job.<br>
+      We Make Sure <span class="g">The Next One Gets Booked.</span>
+    </h1>
+
+    <p class="hero-sub sr d2">
+      When you're on a roof or under a sink, you can't answer every call. We respond for you — in seconds — so the lead stays warm and the job gets booked.
+    </p>
+
+    <div class="hero-actions sr d3">
+      <a href="#how" class="btn btn-solid btn-solid-lg">
+        See How Many Jobs You're Missing
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#demo" class="btn btn-outline btn-outline-lg">Get a free demo</a>
+    </div>
+
+    <div class="hero-proof sr d4">
+      <div class="hero-proof-item">
+        <div class="hero-proof-num">&lt; 60s</div>
+        <div class="hero-proof-label">Response on every missed call</div>
+      </div>
+      <div class="hero-proof-div"></div>
+      <div class="hero-proof-item">
+        <div class="hero-proof-num">5–7 days</div>
+        <div class="hero-proof-label">To go fully live</div>
+      </div>
+      <div class="hero-proof-div"></div>
+      <div class="hero-proof-item">
+        <div class="hero-proof-num">$0</div>
+        <div class="hero-proof-label">Upfront — no contracts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="orb op"></div>
+  <div class="problem-inner wrap">
+    <div class="problem-layout">
+
+      <div class="problem-copy sr">
+        <div class="problem-eyebrow">Why it matters</div>
+        <h2>While you work,<br><em>jobs walk away.</em></h2>
+        <p>Most contractors miss 8–12 calls a week. Not because they're bad at their job — because they're doing it. On a job site, up a ladder, in a crawl space.</p>
+        <p>The customer who called you just called the next contractor on Google. They didn't leave a voicemail. They never will. That job is gone.</p>
+      </div>
+
+      <div class="problem-stats sr d2">
+        <div class="prob-stat-row">
+          <div class="prob-stat-num r">78%</div>
+          <div class="prob-stat-text">
+            <strong>Never leave a voicemail</strong>
+            <span>If you don't pick up, they call someone else</span>
+          </div>
+        </div>
+        <div class="prob-stat-row">
+          <div class="prob-stat-num a">5 min</div>
+          <div class="prob-stat-text">
+            <strong>Before a lead goes cold</strong>
+            <span>Speed of response is the biggest factor in winning the job</span>
+          </div>
+        </div>
+        <div class="prob-stat-row">
+          <div class="prob-stat-num b">$1,800</div>
+          <div class="prob-stat-text">
+            <strong>Average value of a missed job</strong>
+            <span>Missing 2 calls a week is $3,600 gone every 7 days</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how">
+  <div class="orb oh"></div>
+  <div class="hiw-inner wrap">
+    <div class="hiw-head">
+      <div class="eyebrow sr">How it works</div>
+      <h2 class="sr d1">A missed call becomes<br><em>a confirmed job.</em></h2>
+      <p class="sr d2">The whole thing runs in the background. You just see new bookings.</p>
+    </div>
+
+    <div class="steps-grid sr d2">
+
+      <div class="step-card">
+        <div class="step-card-num">01 — Detected</div>
+        <div class="step-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.49 2 2 0 0 1 3.55 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.87-.87a2 2 0 0 1 2.11.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/><line x1="17" y1="1" x2="23" y2="7"/><line x1="23" y1="1" x2="17" y2="7"/></svg>
+        </div>
+        <h3>Call missed while you're on site</h3>
+        <p>Customer rings while you're busy. The system detects it the instant it goes unanswered.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-card-num">02 — Responded</div>
+        <div class="step-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Text reply goes out in seconds</h3>
+        <p>"Hey — sorry we missed your call. How can we help?" Sent before they dial the next number.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-card-num">03 — Captured</div>
+        <div class="step-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        </div>
+        <h3>Lead info saved automatically</h3>
+        <p>They reply with what they need. Every detail lands in one place — nothing gets lost in texts.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-card-num">04 — Booked</div>
+        <div class="step-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+        </div>
+        <h3>Job confirmed in your calendar</h3>
+        <p>If they don't book right away, follow-ups go out until they do. You see a new job. That's it.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM / FEATURES -->
+<section class="features" id="system">
+  <div class="orb of"></div>
+  <div class="features-inner wrap">
+    <div class="features-head">
+      <div class="eyebrow sr">The system</div>
+      <h2 class="sr d1">Built around<br><em>how you actually work.</em></h2>
+      <p class="sr d2">Not software you have to manage. A system that runs while you're on site.</p>
+    </div>
+
+    <div class="bento sr d2">
+
+      <!-- Main card — full width -->
+      <div class="bento-main">
+        <div class="bento-main-copy">
+          <div class="bento-main-tag">Core feature</div>
+          <h3>Missed call text-back</h3>
+          <p>The second a call goes unanswered, a text goes out from your number. The customer knows you saw them — and you're first to respond, every time. Most jobs are won by whoever replies first. Now that's always you.</p>
+        </div>
+        <div class="bento-main-visual">
+          <div class="sms-preview">
+            <div class="sms-notif">
+              <div class="sms-notif-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v0a3 3 0 0 0 5.12 2.12M9 9a3 3 0 0 1 3-3c1.1 0 2.07.59 2.6 1.46M17.73 11.27A13.95 13.95 0 0 1 18 12c0 3.87-2.69 7.12-6.32 7.83M3.72 3.72A16.94 16.94 0 0 0 2 12c0 5.52 2.67 10.41 6.8 13.45M22 22c-.93-1.37-1.43-3.09-1.43-4.91A16.95 16.95 0 0 0 22 12c0-5.52-2.67-10.41-6.8-13.45"/></svg>
+              </div>
+              <div>
+                <strong>Missed call — Chris R.</strong>
+                <span>2:14 pm · just now</span>
+              </div>
+            </div>
+            <div class="sms-bubble-row out">
+              <div class="sms-bubble out">Hey — sorry we missed your call. How can we help?</div>
+            </div>
+            <div class="sms-bubble-row">
+              <div class="sms-bubble in">Need a quote for AC repair, it's not cooling</div>
+            </div>
+            <div class="sms-bubble-row out">
+              <div class="sms-bubble out">We can sort that — what's best, a call or coming by tomorrow?</div>
+            </div>
+            <div class="sms-booked">
+              <div class="sms-booked-dot"></div>
+              <span>Job confirmed · while you were still on site</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 smaller cards -->
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="9" y2="10"/><line x1="15" y1="10" x2="15" y2="10"/></svg>
+        </div>
+        <h3>Lead capture on your website</h3>
+        <p>Visitors who don't call still book. A form on your site catches them — and sends an immediate reply. Every enquiry lands in the same place as your calls.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </div>
+        <h3>Follow-up until they book</h3>
+        <p>Leads that don't respond right away aren't lost. The system follows up two or three times — then stops when they book, or when they say no. No chasing required.</p>
+      </div>
+
+      <div class="bento-card" style="grid-column: 1 / -1;">
+        <div style="display:flex; align-items:flex-start; gap:1.5rem; flex-wrap:wrap;">
+          <div class="bento-card-icon" style="flex-shrink:0; margin-bottom:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <h3 style="margin-bottom:.4rem;">Online booking, straight into your calendar</h3>
+            <p style="max-width:580px; margin:0;">Customers can confirm a time themselves. No back-and-forth. No double bookings. Reminders go out so they show up — and your schedule fills without you touching it.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <div class="orb or1"></div>
+  <div class="orb or2"></div>
+  <div class="results-inner wrap">
+    <div class="eyebrow sr">Why it works</div>
+    <div class="results-layout">
+
+      <div class="results-copy">
+        <h2 class="sr d1">More jobs from<br><em>the same traffic.</em></h2>
+        <p class="sr d2">You don't need more leads. You need to stop losing the ones you already have. That's what this does.</p>
+        <ul class="outcomes">
+          <li class="outcome sr d1">
+            <div class="outcome-mark">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <strong>You reply first, every time</strong>
+              <span>Before they dial someone else — the job stays yours</span>
+            </div>
+          </li>
+          <li class="outcome sr d2">
+            <div class="outcome-mark">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <strong>No leads fall through the cracks</strong>
+              <span>Every call, every form submission — caught and responded to</span>
+            </div>
+          </li>
+          <li class="outcome sr d3">
+            <div class="outcome-mark">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <strong>Follow-ups happen without you</strong>
+              <span>No more forgetting to call back or losing jobs to silence</span>
+            </div>
+          </li>
+          <li class="outcome sr d4">
+            <div class="outcome-mark">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <strong>Works nights, weekends, bank holidays</strong>
+              <span>Every time you can't pick up, the system has you covered</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="metrics sr d2">
+        <div class="metric">
+          <div class="metric-val p">&lt;60s</div>
+          <div class="metric-lbl">Response time on every missed call</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val g">21×</div>
+          <div class="metric-lbl">More likely to win the job when you reply within 5 minutes</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val a">$1,800</div>
+          <div class="metric-lbl">Average value of a job recovered</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val w">5–7d</div>
+          <div class="metric-lbl">Setup time — we handle everything</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="offer" id="demo">
+  <div class="orb oo"></div>
+  <div class="offer-inner wrap">
+    <div class="eyebrow sr">Get started</div>
+    <div class="offer-layout">
+
+      <div class="offer-copy">
+        <h2 class="sr d1">Live in days,<br><em>not weeks.</em></h2>
+        <p class="sr d2">Most agencies take months. We're up and running in less than a week. You don't touch the setup — just show up to the demo call and we take it from there.</p>
+        <div class="offer-rows sr d3">
+          <div class="offer-row">
+            <div class="offer-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h4>Setup done in 5–7 days</h4>
+              <p>We build it, connect it, and test it. You just give us the basics about your business.</p>
+            </div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h4>15-minute demo, no pitch</h4>
+              <p>We show you the system running live. You ask questions. We answer them honestly.</p>
+            </div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <h4>No long-term contract</h4>
+              <p>Month to month. If it's not working, you're not locked in. It will work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-panel sr d3">
+        <div class="offer-panel-glow"></div>
+        <div class="offer-panel-inner">
+          <h3>Book your free demo</h3>
+          <p>A 15-minute call. We'll show you the system on a live number, walk you through what it looks like for your trade, and tell you what it costs. That's it.</p>
+          <ul class="offer-list">
+            <li>
+              <div class="offer-list-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              Watch the missed call text-back fire live
+            </li>
+            <li>
+              <div class="offer-list-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              We show you the version built for your trade
+            </li>
+            <li>
+              <div class="offer-list-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              Pricing explained upfront — no surprises
+            </li>
+            <li>
+              <div class="offer-list-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              Live in under 7 days if you want to move
+            </li>
+          </ul>
+          <a href="#" class="btn btn-solid btn-solid-lg" style="width:100%; justify-content:center;">
+            Book a call
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p class="offer-note">No credit card. No obligation. Just a 15-minute call.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section class="live-demo" id="try-it">
+  <div class="orb ld1"></div>
+  <div class="orb ld2"></div>
+  <div class="demo-inner">
+
+    <div class="eyebrow sr">Try it live</div>
+    <h2 class="sr d1">See How It Works — <em>On Your Phone.</em></h2>
+    <p class="sr d2">Enter your number and we'll send you the exact text your customers would receive after a missed call. Takes 10 seconds.</p>
+
+    <div class="demo-card sr d3">
+      <div class="demo-card-glow"></div>
+
+      <!-- Form view -->
+      <div class="demo-form" id="demo-form">
+        <label class="demo-label" for="demo-phone">Your mobile number</label>
+        <div class="phone-row">
+          <div class="phone-prefix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+            +1
+          </div>
+          <input
+            id="demo-phone"
+            class="phone-input"
+            type="tel"
+            placeholder="(555) 000-0000"
+            autocomplete="tel"
+            maxlength="16"
+          />
+        </div>
+        <div class="demo-error-msg" id="demo-error"></div>
+        <button class="demo-btn" id="demo-btn" onclick="submitDemo()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.49 2 2 0 0 1 3.55 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.87-.87a2 2 0 0 1 2.11.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Simulate Missed Call
+        </button>
+        <p class="demo-privacy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          One text only. No follow-ups, no spam. Just the demo.
+        </p>
+      </div>
+
+      <!-- Success view (hidden until submit) -->
+      <div class="demo-success" id="demo-success">
+        <div class="success-header">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="success-title">Message sent — check your phone.</div>
+            <div class="success-sub">This is exactly what your customers would receive.</div>
+          </div>
+        </div>
+        <div class="success-sms">
+          <div class="success-sms-label">SMS preview</div>
+          <div class="success-bubble-row">
+            <div class="success-bubble">
+              Hey — sorry we missed your call. We'd love to help. What's the job? We'll get back to you shortly.
+            </div>
+          </div>
+          <div class="success-delivered">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Delivered
+          </div>
+        </div>
+        <button class="demo-reset" onclick="resetDemo()">Try a different number</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="finale">
+  <div class="orb fc1"></div>
+  <div class="orb fc2"></div>
+  <div class="orb fc3"></div>
+  <div class="finale-inner">
+    <span class="finale-kicker sr">Claido Systems</span>
+    <h2 class="sr d1">
+      Stop losing jobs.<br>
+      <span class="g">Start capturing every lead.</span>
+    </h2>
+    <p class="sr d2">One missed call can cost you over a thousand dollars. The fix takes 15 minutes to see and a week to deploy.</p>
+    <div class="finale-btns sr d3">
+      <a href="#demo" class="btn btn-solid btn-solid-lg">
+        See it in action
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#how" class="btn btn-outline btn-outline-lg">How it works</a>
+    </div>
+    <div class="finale-footnote sr d4">
+      <span>No contracts</span>
+      <span>Free demo</span>
+      <span>Live in 5–7 days</span>
+      <span>HVAC, Plumbing, Roofing &amp; more</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer wrap">
+  <p>© 2025 Claido Systems</p>
+  <p>Missed Job Recovery System™</p>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('up'); io.unobserve(e.target); } }),
+    { threshold: 0.07, rootMargin: '0px 0px -36px 0px' }
+  );
+  document.querySelectorAll('.sr').forEach(el => io.observe(el));
+
+  // ── Live Demo ──
+  const WEBHOOK_URL = 'https://hook.us2.make.com/nkqgppmee8ou21oqiuwyijbepmwoizjj';
+
+  function validatePhone(raw) {
+    const digits = raw.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  }
+
+  function toE164(raw) {
+    const cleaned = raw.replace(/[\s\-\(\)\.]/g, '');
+    if (cleaned.startsWith('+')) return cleaned;
+    // Strip leading 0 (EU/UK), otherwise prepend +1 (US/CA default)
+    const digits = cleaned.replace(/\D/g, '');
+    return '+1' + digits;
+  }
+
+  function setError(msg) {
+    const el  = document.getElementById('demo-error');
+    const inp = document.getElementById('demo-phone');
+    el.textContent = msg;
+    el.style.display = 'block';
+    inp.classList.add('input-error');
+  }
+
+  function clearError() {
+    const el  = document.getElementById('demo-error');
+    const inp = document.getElementById('demo-phone');
+    el.style.display = 'none';
+    el.textContent = '';
+    inp.classList.remove('input-error');
+  }
+
+  function setLoading(loading) {
+    const btn = document.getElementById('demo-btn');
+    if (loading) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="btn-spinner"></span> Sending…';
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.49 2 2 0 0 1 3.55 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.87-.87a2 2 0 0 1 2.11.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Simulate Missed Call`;
+    }
+  }
+
+  function showSuccess() {
+    const form    = document.getElementById('demo-form');
+    const success = document.getElementById('demo-success');
+    form.style.display = 'none';
+    success.classList.add('show');
+    // Trigger transition on next frame so opacity animates
+    requestAnimationFrame(() => requestAnimationFrame(() => success.classList.add('visible')));
+    success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetDemo() {
+    const form    = document.getElementById('demo-form');
+    const success = document.getElementById('demo-success');
+    const inp     = document.getElementById('demo-phone');
+    success.classList.remove('visible', 'show');
+    form.style.display = 'block';
+    inp.value = '';
+    clearError();
+    setLoading(false);
+  }
+
+  function submitDemo() {
+    clearError();
+    const raw = document.getElementById('demo-phone').value.trim();
+
+    if (!raw) {
+      setError('Please enter your phone number.');
+      document.getElementById('demo-phone').focus();
+      return;
+    }
+    if (!validatePhone(raw)) {
+      setError('That doesn\'t look like a valid number — please check and try again.');
+      document.getElementById('demo-phone').focus();
+      return;
+    }
+
+    const phone = toE164(raw);
+    setLoading(true);
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Non-2xx response');
+        showSuccess();
+      })
+      .catch(() => {
+        setLoading(false);
+        setError('Something went wrong — please try again in a moment.');
+      });
+  }
+
+  // Allow Enter key to submit
+  document.getElementById('demo-phone').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitDemo();
+  });
+  // Clear error styling as user types
+  document.getElementById('demo-phone').addEventListener('input', clearError);
+</script>
+</body>
+</html>

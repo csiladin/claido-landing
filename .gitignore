@@ -1,0 +1,11 @@
+# Sensitive files
+twilio_2FA_recovery_code.txt
+
+# Media / assets not needed in repo
+*.jpg
+*.mp4
+*.png
+
+# Folders
+claido-landing/
+Google Sheets Form/

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claido — Beauty & Appointment Businesses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #faf7f2;
+      --cream1:  #f4f0e8;
+      --cream2:  #ede8de;
+      --cream3:  #ddd6c8;
+      --ink:     #1e1a16;
+      --text:    #0f0d0b;
+      --text2:   #5c5750;
+      --text3:   #9c958d;
+      --rose:    #a8724e;
+      --rose2:   #c08b65;
+      --rose3:   #e2c4a8;
+      --purple:  #6b5e8a;
+      --border:  rgba(15,13,11,0.09);
+      --bord2:   rgba(15,13,11,0.16);
+      --shadow:  rgba(15,13,11,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--cream); color: var(--text);
+      line-height: 1.6; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 999; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; background-size: 180px;
+    }
+
+    .sr { opacity: 0; transform: translateY(20px); transition: opacity .72s cubic-bezier(.16,1,.3,1), transform .72s cubic-bezier(.16,1,.3,1); }
+    .sr.up { opacity: 1; transform: none; }
+    .d1 { transition-delay: .08s; }
+    .d2 { transition-delay: .16s; }
+    .d3 { transition-delay: .24s; }
+    .d4 { transition-delay: .32s; }
+    .d5 { transition-delay: .40s; }
+    .d6 { transition-delay: .48s; }
+
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 2.5rem; width: 100%; }
+
+    /* ─────────────── NAV ─────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(24px) saturate(150%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 500; color: var(--text3);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-back:hover { color: var(--text2); }
+    .nav-back svg { width: 13px; height: 13px; }
+    .nav-sep { width: 1px; height: 16px; background: var(--border); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px; font-weight: 600; letter-spacing: .08em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-cta {
+      padding: 9px 22px; border-radius: 3px; font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: var(--text); color: var(--cream); text-decoration: none;
+      box-shadow: 0 2px 12px rgba(15,13,11,0.2);
+      transition: background .2s, transform .18s, box-shadow .2s;
+    }
+    .nav-cta:hover { background: var(--rose); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(168,114,78,0.3); }
+
+    /* ─────────────── BUTTONS ─────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 16px 36px; border-radius: 3px;
+      font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      background: var(--text); color: var(--cream); text-decoration: none;
+      box-shadow: 0 4px 24px rgba(15,13,11,0.22);
+      transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { background: var(--rose); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(168,114,78,0.35); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 15px 30px; border-radius: 3px;
+      font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      background: transparent; color: var(--text2); text-decoration: none;
+      border: 1px solid var(--bord2);
+      transition: border-color .2s, color .2s, transform .2s;
+    }
+    .btn-secondary:hover { border-color: var(--rose); color: var(--rose); transform: translateY(-2px); }
+
+    /* ─────────────── 1. HERO ─────────────── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 110px 2.5rem 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 50%, rgba(195,155,120,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 70% at 80% 30%, rgba(145,120,180,0.09) 0%, transparent 60%),
+        linear-gradient(175deg, #faf7f2 0%, #f0ebe0 55%, #ede5d8 100%);
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(15,13,11,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,13,11,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 80% at 35% 50%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 80% at 35% 50%, black 20%, transparent 100%);
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1060px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 1.75rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after { content: '✦'; font-size: 8px; opacity: .6; }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 5vw, 5rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.04; color: var(--text); margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 500;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--rose2) 60%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px; color: var(--text2); line-height: 1.8;
+      margin-bottom: 2.5rem; max-width: 430px;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .hero-stats {
+      display: flex; gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .stat-item {
+      flex: 1; background: rgba(255,255,255,0.55); padding: 1.25rem 1.5rem; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.6rem; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.02em;
+    }
+    .stat-label { font-size: 10.5px; color: var(--text3); letter-spacing: .1em; text-transform: uppercase; margin-top: 5px; line-height: 1.4; }
+
+    /* Phone mockup */
+    .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    .phone-shadow-ring {
+      position: absolute; inset: -30px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(168,114,78,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .phone {
+      width: 268px; height: 560px; border-radius: 38px; background: #fefcf9;
+      border: 1px solid rgba(15,13,11,0.12);
+      box-shadow: 0 0 0 7px rgba(15,13,11,0.04), 0 24px 60px rgba(15,13,11,0.14), 0 8px 24px rgba(15,13,11,0.08);
+      overflow: hidden; position: relative; z-index: 2; display: flex; flex-direction: column;
+    }
+    .phone-bar {
+      background: #fefcf9; padding: 12px 20px 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .phone-time { font-size: 12px; font-weight: 700; color: var(--text); }
+    .phone-header {
+      background: #fefcf9; padding: 10px 18px 14px;
+      border-bottom: 1px solid rgba(15,13,11,0.07);
+      display: flex; align-items: center; gap: 11px;
+    }
+    .phone-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose2), var(--purple));
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600;
+    }
+    .phone-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .phone-status { font-size: 11px; color: var(--rose2); font-weight: 500; }
+    .online-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4cae7a; margin-right: 4px; vertical-align: middle; }
+    .phone-body { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; background: #f8f4ef; }
+    .msg { display: flex; flex-direction: column; }
+    .msg.them { align-self: flex-start; max-width: 78%; }
+    .msg.me   { align-self: flex-end;   max-width: 78%; }
+    .bubble { padding: 9px 13px; font-size: 12.5px; line-height: 1.55; color: var(--text); }
+    .msg.them .bubble { background: #fff; border-radius: 16px 16px 16px 4px; box-shadow: 0 1px 4px rgba(15,13,11,0.08); }
+    .msg.me .bubble { background: var(--text); color: #faf7f2; border-radius: 16px 16px 4px 16px; }
+    .msg-time { font-size: 9.5px; color: var(--text3); margin-top: 3px; }
+    .msg.me .msg-time { text-align: right; }
+    .booking-card {
+      background: #fff; border: 1px solid rgba(15,13,11,0.08); border-radius: 14px; padding: 12px;
+      margin-top: 2px; box-shadow: 0 2px 8px rgba(15,13,11,0.06);
+    }
+    .bc-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--rose); margin-bottom: 7px; }
+    .bc-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .bc-slots { display: flex; flex-direction: column; gap: 5px; margin-bottom: 8px; }
+    .bc-slot {
+      padding: 6px 10px; background: rgba(168,114,78,0.07); border: 1px solid rgba(168,114,78,0.18);
+      border-radius: 7px; font-size: 11.5px; color: var(--rose); font-weight: 600;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .bc-dot { width: 6px; height: 6px; border-radius: 50%; background: #4cae7a; }
+    .bc-btn {
+      width: 100%; padding: 7px; background: var(--text); border: none; border-radius: 8px;
+      color: var(--cream); font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 700; cursor: default;
+    }
+    .float-card {
+      position: absolute; background: #fff;
+      border: 1px solid rgba(15,13,11,0.1); border-radius: 12px; padding: 11px 14px; z-index: 4;
+      box-shadow: 0 8px 28px rgba(15,13,11,0.12), 0 2px 6px rgba(15,13,11,0.06);
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .float-card.fc1 { top: 70px; left: -140px; animation: floatA 5s ease-in-out infinite; }
+    .float-card.fc2 { bottom: 100px; right: -130px; animation: floatB 5.5s ease-in-out infinite; }
+    @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    .fc-dot { width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .fc-dot.r { background: rgba(168,114,78,0.1); border: 1px solid rgba(168,114,78,0.2); color: var(--rose); }
+    .fc-dot.g { background: rgba(76,174,122,0.1); border: 1px solid rgba(76,174,122,0.22); color: #4cae7a; }
+    .fc-label { font-size: 12px; font-weight: 700; color: var(--text); }
+    .fc-sub   { font-size: 10.5px; color: var(--text3); }
+
+    /* ─────────────── SHARED SECTION STYLES ─────────────── */
+    .section-label {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--rose); display: block; margin-bottom: 1rem;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.1; color: var(--text); margin-bottom: 1rem;
+    }
+    .section-heading em {
+      font-style: italic; font-weight: 500;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .section-note { font-size: 15px; color: var(--text2); line-height: 1.75; max-width: 500px; }
+    .section-divider { height: 1px; background: var(--border); }
+
+    /* ─────────────── 2. WHAT YOU GET ─────────────── */
+    .wyg { padding: 96px 0; background: var(--cream); }
+    .wyg-head { text-align: center; margin-bottom: 4rem; }
+    .wyg-head .section-note { margin: 0 auto; }
+
+    .wyg-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      box-shadow: 0 4px 28px var(--shadow);
+    }
+    .wyg-item {
+      background: #fff; padding: 2.25rem 2rem;
+      display: flex; align-items: flex-start; gap: 1.1rem;
+      transition: background .25s;
+    }
+    .wyg-item:hover { background: var(--cream); }
+    .wyg-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(168,114,78,0.08); border: 1px solid rgba(168,114,78,0.18);
+      color: var(--rose); display: flex; align-items: center; justify-content: center;
+      transition: background .25s, border-color .25s;
+    }
+    .wyg-item:hover .wyg-icon { background: rgba(168,114,78,0.13); border-color: rgba(168,114,78,0.28); }
+    .wyg-icon svg { width: 18px; height: 18px; }
+    .wyg-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; line-height: 1.2; margin-bottom: .3rem;
+    }
+    .wyg-desc { font-size: 13px; color: var(--text3); line-height: 1.6; }
+
+    /* ─────────────── 3. HOW IT WORKS ─────────────── */
+    .hiw { padding: 96px 0; background: var(--cream1); }
+    .hiw-head { text-align: center; margin-bottom: 4.5rem; }
+    .hiw-head .section-note { margin: 0 auto; }
+
+    .steps-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; position: relative;
+    }
+    /* connecting line */
+    .steps-row::before {
+      content: ''; position: absolute;
+      top: 32px; left: calc(16.67% + 16px); right: calc(16.67% + 16px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose3), var(--rose3), transparent);
+    }
+    .step {
+      padding: 0 2.5rem; text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .step-num-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--cream); border: 1px solid var(--bord2);
+      box-shadow: 0 4px 16px var(--shadow);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 2rem; position: relative; z-index: 1;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .step:hover .step-num-circle { border-color: var(--rose); box-shadow: 0 6px 24px rgba(168,114,78,0.18); }
+    .step-n {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem; font-weight: 600; color: var(--rose); line-height: 1;
+    }
+    .step-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--text);
+      margin-bottom: .75rem; letter-spacing: -0.01em; line-height: 1.2;
+    }
+    .step-text { font-size: 14px; color: var(--text2); line-height: 1.75; max-width: 220px; }
+
+    /* ─────────────── 4. NO EFFORT ─────────────── */
+    .no-effort { padding: 96px 0; background: var(--ink); }
+    .no-effort-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .ne-copy .section-label { color: var(--rose3); opacity: .8; }
+    .ne-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.1; color: #f5f0e8;
+      margin-bottom: 1rem;
+    }
+    .ne-sub { font-size: 15px; color: rgba(245,240,232,0.55); line-height: 1.75; }
+
+    .ne-list { display: flex; flex-direction: column; gap: 1px; }
+    .ne-item {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1.5rem 1.75rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px; margin-bottom: 10px;
+      transition: background .25s;
+    }
+    .ne-item:last-child { margin-bottom: 0; }
+    .ne-item:hover { background: rgba(255,255,255,0.07); }
+    .ne-check {
+      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(168,114,78,0.15); border: 1px solid rgba(168,114,78,0.3);
+      display: flex; align-items: center; justify-content: center; color: var(--rose3);
+    }
+    .ne-check svg { width: 15px; height: 15px; }
+    .ne-text { font-size: 15px; font-weight: 600; color: #f0ebe0; line-height: 1.4; }
+
+    /* ─────────────── 5. RESULTS ─────────────── */
+    .results { padding: 96px 0; background: var(--cream); }
+    .results-head { text-align: center; margin-bottom: 4.5rem; }
+    .results-head .section-note { margin: 0 auto; }
+
+    .results-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .result-card {
+      padding: 2.5rem; border-radius: 6px;
+      border: 1px solid var(--border); background: #fff;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+    .result-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(15,13,11,0.1); border-color: var(--rose3); }
+    .result-icon {
+      width: 48px; height: 48px; border-radius: 12px; margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(168,114,78,0.08); border: 1px solid rgba(168,114,78,0.18);
+      color: var(--rose);
+    }
+    .result-icon svg { width: 22px; height: 22px; }
+    .result-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 3rem; font-weight: 700; color: var(--text);
+      line-height: 1; letter-spacing: -0.03em; margin-bottom: .3rem;
+    }
+    .result-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      margin-bottom: .6rem; letter-spacing: -0.01em;
+    }
+    .result-desc { font-size: 13.5px; color: var(--text2); line-height: 1.75; }
+
+    /* ─────────────── 6. FINAL CTA ─────────────── */
+    .finale {
+      padding: 120px 2.5rem; text-align: center; position: relative; overflow: hidden;
+      background: linear-gradient(180deg, var(--cream1) 0%, var(--cream) 100%);
+    }
+    .finale::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(168,114,78,0.08) 0%, transparent 70%);
+    }
+    .finale-inner { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+    .finale-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.1; color: var(--text); margin-bottom: 1.25rem;
+    }
+    .finale-heading em {
+      font-style: italic; font-weight: 500;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .finale-sub { font-size: 16px; color: var(--text2); line-height: 1.8; margin-bottom: 2.75rem; }
+    .finale-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .finale-note { font-size: 12px; color: var(--text3); margin-top: 1.5rem; letter-spacing: .04em; }
+
+    /* ─────────────── FOOTER ─────────────── */
+    .footer {
+      border-top: 1px solid var(--border); padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      background: var(--cream1);
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px; font-weight: 600; letter-spacing: .06em;
+      color: var(--text2); text-decoration: none;
+    }
+    .footer-links { display: flex; align-items: center; gap: 2rem; }
+    .footer-links a { font-size: 12.5px; color: var(--text3); text-decoration: none; letter-spacing: .05em; transition: color .2s; }
+    .footer-links a:hover { color: var(--rose); }
+    .footer-cr { font-size: 12px; color: var(--text3); }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3.5rem; }
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { display: none; }
+      .no-effort-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 720px) {
+      .wyg-grid { grid-template-columns: 1fr 1fr; }
+      .steps-row { grid-template-columns: 1fr; gap: 3rem; }
+      .steps-row::before { display: none; }
+      .results-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+      .nav { padding: 0 1.5rem; }
+      .hero { padding: 100px 1.5rem 70px; }
+      .wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .wyg { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hiw { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .no-effort { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .results { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .wyg-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: stretch; text-align: center; }
+      .hero-stats { flex-direction: column; }
+      .stat-item { border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      .footer { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Industries
+    </a>
+    <div class="nav-sep"></div>
+    <a href="beauty.html" class="nav-logo">Claido</a>
+  </div>
+  <a href="#cta" class="nav-cta">Get Your Booking System</a>
+</nav>
+
+
+<!-- ─────── 1. HERO ─────── -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-copy">
+      <div class="hero-eyebrow sr">Appointment-Based Businesses</div>
+      <h1 class="sr d1">
+        Turn Your Page Into<br><em>a Booking Experience</em>
+      </h1>
+      <p class="hero-sub sr d2">
+        Let clients book, see your work, and hear back — without you living in your DMs. Built for nail techs, barbers, stylists, and anyone who books by appointment.
+      </p>
+      <div class="hero-actions sr d3">
+        <a href="#cta" class="btn-primary">Get Your Booking System</a>
+        <a href="#hiw" class="btn-secondary">See How It Works</a>
+      </div>
+      <div class="hero-stats sr d4">
+        <div class="stat-item">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Booking availability</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">&lt; 60s</div>
+          <div class="stat-label">Avg. reply time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5–7</div>
+          <div class="stat-label">Days to go live</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual sr d2">
+      <div style="position:relative;">
+        <div class="phone-shadow-ring"></div>
+        <div class="float-card fc1">
+          <div class="fc-dot r">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+          </div>
+          <div>
+            <div class="fc-label">New Booking</div>
+            <div class="fc-sub">Jess M. — Sat 2:00 PM</div>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-bar">
+            <span class="phone-time">9:41</span>
+            <span style="font-size:11px;color:var(--text3);">●●●</span>
+          </div>
+          <div class="phone-header">
+            <div class="phone-avatar">C</div>
+            <div>
+              <div class="phone-name">Claido Booking</div>
+              <div class="phone-status"><span class="online-dot"></span>Available now</div>
+            </div>
+          </div>
+          <div class="phone-body">
+            <div class="msg them">
+              <div class="bubble">Hi! Do you have anything this weekend for a full set?</div>
+              <div class="msg-time">2:12 PM</div>
+            </div>
+            <div class="msg me">
+              <div class="bubble">Hey! Yes — here are available slots this weekend:</div>
+              <div class="msg-time">2:12 PM</div>
+            </div>
+            <div class="msg me">
+              <div class="booking-card">
+                <div class="bc-tag">Available This Weekend</div>
+                <div class="bc-title">Full Set · 90 min</div>
+                <div class="bc-slots">
+                  <div class="bc-slot">Sat · 2:00 PM <div class="bc-dot"></div></div>
+                  <div class="bc-slot">Sat · 4:30 PM <div class="bc-dot"></div></div>
+                  <div class="bc-slot">Sun · 11:00 AM <div class="bc-dot"></div></div>
+                </div>
+                <button class="bc-btn">Confirm Booking →</button>
+              </div>
+              <div class="msg-time" style="text-align:right">2:12 PM</div>
+            </div>
+            <div class="msg them">
+              <div class="bubble">Saturday 2pm works!</div>
+              <div class="msg-time">2:13 PM</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-card fc2">
+          <div class="fc-dot g">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="fc-label">Deposit Received</div>
+            <div class="fc-sub">Reminder set for Fri 8pm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ─────── 2. WHAT YOU GET ─────── -->
+<section class="wyg">
+  <div class="wrap">
+    <div class="wyg-head">
+      <span class="section-label sr">What's included</span>
+      <h2 class="section-heading sr d1">Everything You Need<br>To Get Booked</h2>
+      <p class="section-note sr d2">One system. Six things that work together from day one.</p>
+    </div>
+    <div class="wyg-grid">
+
+      <div class="wyg-item sr d1">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Booking Page</div>
+          <div class="wyg-desc">A clean, mobile-ready page where clients book directly without DMing you.</div>
+        </div>
+      </div>
+
+      <div class="wyg-item sr d2">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Service &amp; Pricing Setup</div>
+          <div class="wyg-desc">Your services and prices listed clearly. No more repeating them in DMs.</div>
+        </div>
+      </div>
+
+      <div class="wyg-item sr d3">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Instant Replies</div>
+          <div class="wyg-desc">New inquiries get an automatic response in under 60 seconds, day or night.</div>
+        </div>
+      </div>
+
+      <div class="wyg-item sr d4">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.49 2 2 0 0 1 3.55 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.87-.87a2 2 0 0 1 2.11.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Missed Call Text-Back</div>
+          <div class="wyg-desc">When you miss a call, we text them back immediately before they move on.</div>
+        </div>
+      </div>
+
+      <div class="wyg-item sr d5">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Portfolio / Gallery</div>
+          <div class="wyg-desc">Showcase your best work. Clients see your style before they book.</div>
+        </div>
+      </div>
+
+      <div class="wyg-item sr d6">
+        <div class="wyg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div>
+          <div class="wyg-name">Mobile &amp; Social Ready</div>
+          <div class="wyg-desc">Works on every device. Link it directly from your Instagram or TikTok bio.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ─────── 3. HOW IT WORKS ─────── -->
+<section class="hiw" id="hiw">
+  <div class="wrap">
+    <div class="hiw-head">
+      <span class="section-label sr">The process</span>
+      <h2 class="section-heading sr d1">Three Steps.<br><em>Then You're Live.</em></h2>
+      <p class="section-note sr d2">We do the work. You approve it. Clients start booking.</p>
+    </div>
+    <div class="steps-row sr d3">
+
+      <div class="step">
+        <div class="step-num-circle">
+          <span class="step-n">1</span>
+        </div>
+        <div class="step-title">We build your booking page</div>
+        <div class="step-text">We set up your services, pricing, calendar, and gallery. Everything is ready before you see it.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-circle">
+          <span class="step-n">2</span>
+        </div>
+        <div class="step-title">We connect your messages and calls</div>
+        <div class="step-text">Instant replies and missed call text-backs are configured to your number. One call with us to confirm the details.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-circle">
+          <span class="step-n">3</span>
+        </div>
+        <div class="step-title">You start getting booked automatically</div>
+        <div class="step-text">Share the link. Clients book, pay deposits, and get reminders — all without you doing a thing.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ─────── 4. NO EFFORT ─────── -->
+<section class="no-effort">
+  <div class="wrap">
+    <div class="no-effort-inner">
+
+      <div class="ne-copy">
+        <span class="section-label sr">Simple by design</span>
+        <h2 class="ne-heading sr d1">Nothing to learn.<br>Nothing to manage.</h2>
+        <p class="ne-sub sr d2">You don't need to be tech-savvy. We handle the setup. Once it's live, it runs in the background while you focus on your clients.</p>
+      </div>
+
+      <div class="sr d3">
+        <div class="ne-list">
+          <div class="ne-item">
+            <div class="ne-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ne-text">No apps to learn</div>
+          </div>
+          <div class="ne-item">
+            <div class="ne-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ne-text">No tech skills needed</div>
+          </div>
+          <div class="ne-item">
+            <div class="ne-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ne-text">Set up in a few days</div>
+          </div>
+          <div class="ne-item">
+            <div class="ne-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ne-text">Works immediately on your phone</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="background:rgba(255,255,255,0.06);"></div>
+
+
+<!-- ─────── 5. RESULTS ─────── -->
+<section class="results">
+  <div class="wrap">
+    <div class="results-head">
+      <span class="section-label sr">What happens next</span>
+      <h2 class="section-heading sr d1">What You'll Notice<br><em>Within the First Week</em></h2>
+      <p class="section-note sr d2">Real outcomes from real appointment-based businesses.</p>
+    </div>
+    <div class="results-grid">
+
+      <div class="result-card sr d1">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="result-label">More bookings</div>
+        <div class="result-desc">Clients who would have moved on are now booking — because they got a reply before they found someone else.</div>
+      </div>
+
+      <div class="result-card sr d2">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="17" y1="1" x2="23" y2="7"/><line x1="23" y1="1" x2="17" y2="7"/></svg>
+        </div>
+        <div class="result-label">Less back-and-forth</div>
+        <div class="result-desc">No more explaining your prices and availability in DMs. Clients get everything they need upfront and book themselves.</div>
+      </div>
+
+      <div class="result-card sr d3">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="result-label">Clients book faster</div>
+        <div class="result-desc">The average time from first message to confirmed booking drops from hours to minutes.</div>
+      </div>
+
+      <div class="result-card sr d4">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+        </div>
+        <div class="result-label">Your calendar fills up</div>
+        <div class="result-desc">Empty slots get filled. Reminders reduce no-shows. Deposits keep people committed.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ─────── 6. FINAL CTA ─────── -->
+<section class="finale" id="cta">
+  <div class="finale-inner">
+    <span class="section-label sr">Ready to start?</span>
+    <h2 class="finale-heading sr d1">
+      Your Chair Should Be<br><em>Full, Not Your Inbox</em>
+    </h2>
+    <p class="finale-sub sr d2">We set everything up. You approve it. It goes live in days. From there, bookings come in while you work.</p>
+    <div class="finale-actions sr d3">
+      <a href="mailto:hello@claido.com" class="btn-primary">Get Your Booking System</a>
+      <a href="index.html" class="btn-secondary">View Other Industries</a>
+    </div>
+    <p class="finale-note sr d4">No credit card. No contract. 15-minute call to see it live.</p>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="index.html" class="footer-logo">Claido</a>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="contractors.html">Contractors</a>
+    <a href="beauty.html">Beauty</a>
+    <a href="mailto:hello@claido.com">Contact</a>
+  </div>
+  <div class="footer-cr">© 2025 Claido Systems</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('up'); io.unobserve(e.target); } }),
+    { threshold: 0.06 }
+  );
+  document.querySelectorAll('.sr').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
