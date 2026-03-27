@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Small Beginnings — Lawn Care, Winston-Salem NC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#0c0c0a;
+  color:#ede8df;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+#cur{
+  position:fixed;width:9px;height:9px;
+  background:#ede8df;border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .22s,height .22s;
+  mix-blend-mode:difference;
+}
+#cur.g{width:46px;height:46px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 2.5rem;
+  mix-blend-mode:difference;
+}
+.logo{
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:#ede8df;text-decoration:none;
+}
+.nav-r{display:flex;align-items:center;gap:2.2rem}
+.nav-r a{
+  font-size:.65rem;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(237,232,223,.55);text-decoration:none;
+  transition:color .18s;
+}
+.nav-r a:hover{color:#ede8df}
+.nav-sep{width:18px;height:1px;background:rgba(237,232,223,.25)}
+.nav-tel{color:#9fb87e!important;opacity:.9}
+
+/* HERO */
+.hero{
+  height:100vh;min-height:580px;
+  display:grid;grid-template-columns:58fr 42fr;
+  position:relative;overflow:hidden;
+}
+.h-pane{position:relative;overflow:hidden}
+.h-pane img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  filter:brightness(.72) saturate(.68);
+  transition:transform 9s ease;
+}
+.hero:hover .h-pane img{transform:scale(1.05)}
+
+.h-card{
+  position:absolute;
+  bottom:10%;left:50%;
+  transform:translateX(-46%);
+  width:330px;
+  background:rgba(58,74,42,.9);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  padding:1.8rem 2rem 1.6rem;
+  z-index:30;
+  animation:cu .95s .35s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes cu{
+  from{opacity:0;transform:translateX(-46%) translateY(30px)}
+  to{opacity:1;transform:translateX(-46%) translateY(0)}
+}
+.h-card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:1.7rem;
+  color:#ede8df;margin-bottom:.2rem;letter-spacing:-.01em;
+}
+.h-card-sub{
+  font-size:.6rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(237,232,223,.38);margin-bottom:1.3rem;
+}
+.h-card-ghost{
+  font-size:3rem;font-weight:500;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:rgba(237,232,223,.05);
+  line-height:1;
+  position:absolute;right:.8rem;bottom:.3rem;
+  user-select:none;pointer-events:none;
+}
+.h-card-meta{
+  display:flex;justify-content:space-between;
+  font-size:.6rem;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(237,232,223,.3);
+  border-top:1px solid rgba(237,232,223,.1);
+  padding-top:.85rem;
+}
+
+.h-scroll{
+  position:absolute;bottom:1.8rem;left:2.5rem;
+  display:flex;align-items:center;gap:.55rem;
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(237,232,223,.25);z-index:20;
+}
+.h-scroll-line{
+  width:1px;height:30px;
+  background:rgba(237,232,223,.14);
+  overflow:hidden;position:relative;
+}
+.h-scroll-line::after{
+  content:'';position:absolute;
+  top:-100%;left:0;width:100%;height:100%;
+  background:rgba(237,232,223,.5);
+  animation:sd 1.7s .9s ease infinite;
+}
+@keyframes sd{from{top:-100%}to{top:200%}}
+
+/* PHOTO GRID */
+.grid{border-top:1px solid rgba(237,232,223,.07)}
+.grid-row{display:grid;grid-template-columns:1fr 1fr;height:62vh;min-height:380px}
+.grid-row+.grid-row{border-top:1px solid rgba(237,232,223,.07)}
+.g-cell{position:relative;overflow:hidden;cursor:none}
+.g-cell img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:brightness(.7) saturate(.62);
+  transition:transform .75s cubic-bezier(.25,.46,.45,.94);
+}
+.g-cell:hover img{transform:scale(1.05)}
+.g-cell+.g-cell{border-left:1px solid rgba(237,232,223,.07)}
+
+.g-label{
+  position:absolute;bottom:1.6rem;left:1.6rem;
+  background:rgba(58,74,42,.88);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  padding:1.1rem 1.4rem 1rem;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .3s,transform .3s;
+  pointer-events:none;
+}
+.g-cell:hover .g-label{opacity:1;transform:translateY(0)}
+.g-label-name{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:1.15rem;
+  color:#ede8df;margin-bottom:.15rem;
+}
+.g-label-type{
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(237,232,223,.38);margin-bottom:.8rem;
+}
+.g-label-meta{
+  display:flex;justify-content:space-between;gap:1.5rem;
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.09em;text-transform:uppercase;
+  color:rgba(237,232,223,.28);
+  border-top:1px solid rgba(237,232,223,.1);
+  padding-top:.7rem;
+}
+
+/* STATEMENT */
+.stmt{
+  padding:5rem 2.5rem;
+  border-top:1px solid rgba(237,232,223,.07);
+  border-bottom:1px solid rgba(237,232,223,.07);
+  display:grid;grid-template-columns:180px 1fr;
+  gap:5rem;align-items:end;
+}
+.stmt-tag{
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#9fb87e;opacity:.55;padding-top:.3rem;
+}
+.stmt-body{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.6rem,3vw,2.6rem);
+  line-height:1.2;color:#ede8df;letter-spacing:-.02em;
+}
+.stmt-body b{
+  font-style:normal;
+  font-family:'DM Sans',sans-serif;
+  font-size:.44em;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:#9fb87e;vertical-align:middle;margin:0 .35em;
+}
+
+/* SERVICES */
+.svcs{padding:0 2.5rem 6rem}
+.svcs-hd{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:3.5rem 0 0;
+  border-bottom:1px solid rgba(237,232,223,.07);
+}
+.svcs-hd h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:600;color:#ede8df;line-height:1;letter-spacing:-.02em;
+}
+.svcs-ct{
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(237,232,223,.2);padding-bottom:.4rem;
+}
+.svc{
+  display:grid;
+  grid-template-columns:3rem 1.5fr 1fr 1.2rem;
+  gap:2.5rem;align-items:center;
+  padding:1.5rem 0;
+  border-bottom:1px solid rgba(237,232,223,.06);
+  transition:background .18s;cursor:none;
+}
+.svc:hover{background:rgba(237,232,223,.02)}
+.svc:hover .sn{color:#9fb87e}
+.svc:hover .sa{opacity:1;transform:translateX(4px)}
+.sn{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:.9rem;
+  color:rgba(237,232,223,.18);transition:color .18s;
+}
+.st{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:600;
+  letter-spacing:-.01em;color:#ede8df;
+}
+.sd{
+  font-size:.8rem;font-weight:300;
+  color:rgba(237,232,223,.35);line-height:1.6;
+}
+.sa{
+  font-size:.85rem;color:#9fb87e;
+  opacity:0;transition:opacity .18s,transform .18s;
+}
+
+/* QUOTE */
+.quote{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-top:1px solid rgba(237,232,223,.07);
+  min-height:600px;
+}
+.q-img{position:relative;overflow:hidden}
+.q-img img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:brightness(.5) saturate(.55);
+}
+.q-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right,transparent 30%,#0c0c0a 100%);
+}
+.q-form{
+  padding:5rem 4rem;
+  display:flex;flex-direction:column;justify-content:center;
+  border-left:1px solid rgba(237,232,223,.07);
+}
+.q-tag{
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#9fb87e;opacity:.5;margin-bottom:1.3rem;
+}
+.q-h{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,5vw,4.5rem);
+  font-weight:600;color:#ede8df;
+  line-height:.95;letter-spacing:-.02em;
+  margin-bottom:3rem;
+}
+.fg{margin-bottom:1.4rem}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+.fl{
+  display:block;font-size:.55rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(237,232,223,.22);margin-bottom:.45rem;
+}
+.fi{
+  width:100%;background:transparent;border:none;
+  border-bottom:1px solid rgba(237,232,223,.1);
+  padding:.65rem 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:300;color:#ede8df;
+  outline:none;transition:border-color .2s;
+  appearance:none;-webkit-appearance:none;
+}
+.fi::placeholder{color:rgba(237,232,223,.14)}
+.fi:focus{border-color:#9fb87e}
+.fi option{background:#141410}
+.fbtn{
+  margin-top:2rem;
+  background:#ede8df;color:#0c0c0a;border:none;
+  padding:.95rem 2.2rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.65rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  cursor:none;transition:background .18s;
+  align-self:flex-start;
+}
+.fbtn:hover{background:#9fb87e}
+
+/* FOOTER */
+footer{
+  padding:1.6rem 2.5rem;
+  border-top:1px solid rgba(237,232,223,.06);
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:.75rem;
+}
+.ft-b{font-size:.75rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,223,.18)}
+.ft-p{font-size:.72rem;font-weight:400;letter-spacing:.08em;color:#9fb87e;opacity:.6;text-decoration:none}
+.ft-c{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(237,232,223,.14)}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  nav{padding:1rem 1.5rem}
+  .nav-r a:not(.nav-tel){display:none}
+  .hero{grid-template-columns:1fr}
+  .h-pane:first-child{display:none}
+  .h-card{left:1.2rem;right:1.2rem;transform:none;width:auto}
+  @keyframes cu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  .grid-row{grid-template-columns:1fr;height:auto}
+  .g-cell{height:55vw}
+  .g-cell+.g-cell{border-left:none;border-top:1px solid rgba(237,232,223,.07)}
+  .stmt{grid-template-columns:1fr;gap:1.2rem;padding:3rem 1.5rem}
+  .svcs{padding:0 1.5rem 3rem}
+  .svc{grid-template-columns:2.5rem 1fr;gap:1rem}
+  .sd,.sa{display:none}
+  .quote{grid-template-columns:1fr}
+  .q-img{height:50vw}
+  .q-img::after{background:linear-gradient(to bottom,transparent 30%,#0c0c0a 100%)}
+  .q-form{padding:3rem 1.5rem}
+  .fg-row{grid-template-columns:1fr}
+  footer{padding:1.2rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<nav>
+  <a href="#" class="logo">Small Beginnings</a>
+  <div class="nav-r">
+    <a href="#services">Services</a>
+    <a href="#quote">Quote</a>
+    <div class="nav-sep"></div>
+    <a href="tel:3364869387" class="nav-tel">(336) 486-9387</a>
+  </div>
+</nav>
+
+<!-- HERO — two photos split across full viewport -->
+<section class="hero">
+  <div class="h-pane">
+    <!-- Left: mowed lawn with stripes -->
+    <img
+      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85&auto=format&fit=crop"
+      alt="Freshly mowed lawn with stripes">
+  </div>
+  <div class="h-pane">
+    <!-- Right: close-up grass texture -->
+    <img
+      src="https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=1000&q=85&auto=format&fit=crop"
+      alt="Close up of healthy grass">
+  </div>
+
+  <div class="h-card">
+    <p class="h-card-name">Small Beginnings</p>
+    <p class="h-card-sub">Lawn Care &nbsp;·&nbsp; Winston-Salem, NC</p>
+    <div class="h-card-ghost">SB</div>
+    <div class="h-card-meta">
+      <span>Winston-Salem, NC</span>
+      <span>Est. 2019</span>
+    </div>
+  </div>
+
+  <div class="h-scroll">
+    <div class="h-scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- SERVICE PHOTO GRID -->
+<div class="grid">
+  <div class="grid-row">
+    <div class="g-cell">
+      <!-- Lawn edging close-up -->
+      <img
+        src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?w=1000&q=85&auto=format&fit=crop"
+        alt="Lawn edging">
+      <div class="g-label">
+        <p class="g-label-name">Mowing & Edging</p>
+        <p class="g-label-type">Residential</p>
+        <div class="g-label-meta"><span>Winston-Salem</span><span>From $45</span></div>
+      </div>
+    </div>
+    <div class="g-cell">
+      <!-- Lush green lawn -->
+      <img
+        src="https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=1000&q=85&auto=format&fit=crop"
+        alt="Lush healthy lawn">
+      <div class="g-label">
+        <p class="g-label-name">Fertilization</p>
+        <p class="g-label-type">Residential</p>
+        <div class="g-label-meta"><span>Winston-Salem</span><span>From $65</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-row">
+    <div class="g-cell">
+      <!-- Autumn leaves on grass -->
+      <img
+        src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1000&q=85&auto=format&fit=crop"
+        alt="Autumn leaves on lawn">
+      <div class="g-label">
+        <p class="g-label-name">Leaf Removal</p>
+        <p class="g-label-type">Seasonal</p>
+        <div class="g-label-meta"><span>Winston-Salem</span><span>From $80</span></div>
+      </div>
+    </div>
+    <div class="g-cell">
+      <!-- Garden / lawn at golden hour -->
+      <img
+        src="https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=1000&q=85&auto=format&fit=crop"
+        style="object-position: center bottom"
+        alt="Lawn at golden hour">
+      <div class="g-label">
+        <p class="g-label-name">Full Maintenance</p>
+        <p class="g-label-type">Ongoing</p>
+        <div class="g-label-meta"><span>Winston-Salem</span><span>Custom quote</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="stmt">
+  <p class="stmt-tag">What we do</p>
+  <p class="stmt-body">
+    We show up when we say we will, cut it the way it should be cut, and charge you what we quoted.
+    <b>Winston-Salem.</b>
+    Nothing more to it.
+  </p>
+</div>
+
+<!-- SERVICES -->
+<section class="svcs" id="services">
+  <div class="svcs-hd">
+    <h2>Services</h2>
+    <span class="svcs-ct">What we offer</span>
+  </div>
+  <div class="svc"><span class="sn">01</span><span class="st">Mowing & Edging</span><span class="sd">Cut at the right height for your grass type. Clean edges on every walk, curb, and bed. From $45.</span><span class="sa">&#8594;</span></div>
+  <div class="svc"><span class="sn">02</span><span class="st">Fertilization</span><span class="sd">Seasonal treatments based on your grass, your soil, your yard — not a generic program. From $65.</span><span class="sa">&#8594;</span></div>
+  <div class="svc"><span class="sn">03</span><span class="st">Weed Control</span><span class="sd">Pre- and post-emergent. We stop weeds before they start, and kill the ones already there. From $55.</span><span class="sa">&#8594;</span></div>
+  <div class="svc"><span class="sn">04</span><span class="st">Leaf Removal</span><span class="sd">Full cleanup before the leaves suffocate your grass. We bag and haul everything. From $80.</span><span class="sa">&#8594;</span></div>
+  <div class="svc"><span class="sn">05</span><span class="st">Overseeding</span><span class="sd">Thicken what's thin, fill what's bare. Fall is the right time for Piedmont lawns. From $95.</span><span class="sa">&#8594;</span></div>
+  <div class="svc"><span class="sn">06</span><span class="st">Maintenance Plans</span><span class="sd">We come every week or every two weeks. You stop thinking about your lawn entirely. Call for pricing.</span><span class="sa">&#8594;</span></div>
+</section>
+
+<!-- QUOTE FORM -->
+<section class="quote" id="quote">
+  <div class="q-img">
+    <!-- Lawn mower at work -->
+    <img
+      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=85&auto=format&fit=crop"
+      style="object-position: right center"
+      alt="Lawn mower on grass">
+  </div>
+  <div class="q-form">
+    <p class="q-tag">No obligation &nbsp;·&nbsp; Same-day estimate</p>
+    <h2 class="q-h">Get a<br>quote.</h2>
+    <div class="fg-row fg">
+      <div><label class="fl">First name</label><input class="fi" type="text" placeholder="John"></div>
+      <div><label class="fl">Last name</label><input class="fi" type="text" placeholder="Smith"></div>
+    </div>
+    <div class="fg"><label class="fl">Phone</label><input class="fi" type="tel" placeholder="(336) 000-0000"></div>
+    <div class="fg"><label class="fl">Address</label><input class="fi" type="text" placeholder="123 Maple St, Winston-Salem"></div>
+    <div class="fg">
+      <label class="fl">What do you need?</label>
+      <select class="fi">
+        <option value="" disabled selected>Choose a service</option>
+        <option>Mowing & Edging</option>
+        <option>Fertilization</option>
+        <option>Weed Control</option>
+        <option>Leaf Removal</option>
+        <option>Overseeding</option>
+        <option>Maintenance Plan</option>
+      </select>
+    </div>
+    <button class="fbtn">Send it &#8594;</button>
+  </div>
+</section>
+
+<footer>
+  <span class="ft-b">Small Beginnings Lawn Care</span>
+  <a href="tel:3364869387" class="ft-p">(336) 486-9387</a>
+  <span class="ft-c">&copy; 2025 &nbsp;·&nbsp; Winston-Salem, NC</span>
+</footer>
+
+<script>
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .svc, .g-cell').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('g'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('g'));
+});
+</script>
+</body>
+</html>
