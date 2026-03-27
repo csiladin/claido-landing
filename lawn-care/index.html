@@ -183,57 +183,64 @@ section{padding:5rem 2rem}
 .svc-card:hover .svc-link::after{transform:translateX(4px)}
 
 /* PORTFOLIO CAROUSEL */
-.portfolio{background:#c8b97a;padding:4rem 0}
-.portfolio .section-head{padding:0 2rem;margin-bottom:2.5rem;text-align:center}
-.portfolio .section-h{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.2)}
+.portfolio{background:#c8b97a;padding:3.5rem 0 4rem}
+.portfolio .section-head{padding:0 2rem;margin-bottom:2rem;text-align:center}
+.portfolio .section-h{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.18)}
 .portfolio .section-tag{color:rgba(255,255,255,.75)}
 
-.port-carousel-wrap{position:relative;display:flex;align-items:center}
+.port-carousel-wrap{
+  position:relative;
+  display:flex;align-items:stretch;
+}
 .port-arrow{
-  position:absolute;z-index:10;
-  width:48px;height:48px;border-radius:50%;
+  flex-shrink:0;
+  width:54px;
+  background:transparent;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  z-index:10;
+}
+.port-arrow-btn{
+  width:42px;height:42px;border-radius:50%;
   background:#fff;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;color:#333;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
-  transition:box-shadow .18s,transform .12s;flex-shrink:0;
+  font-size:1.3rem;font-weight:700;color:#333;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  transition:box-shadow .18s,transform .12s;
 }
-.port-arrow:hover{box-shadow:0 4px 18px rgba(0,0,0,.22);transform:scale(1.06)}
-.port-arrow-prev{left:1rem}
-.port-arrow-next{right:1rem}
+.port-arrow-btn:hover{box-shadow:0 4px 18px rgba(0,0,0,.28);transform:scale(1.07)}
 
-.port-track-outer{overflow:hidden;width:100%;padding:0 4rem}
+.port-track-outer{overflow:hidden;flex:1;min-width:0}
 .port-track{
-  display:flex;gap:1.2rem;
+  display:flex;gap:6px;
   transition:transform .45s cubic-bezier(.4,0,.2,1);
 }
 .port-card{
-  flex:0 0 calc(33.333% - .8rem);
-  border-radius:10px;overflow:hidden;
+  flex:0 0 calc(33.333% - 4px);
+  overflow:hidden;
   position:relative;cursor:pointer;
-  height:320px;
+  height:400px;
 }
 .port-card img{
   width:100%;height:100%;object-fit:cover;
   transition:transform .5s;display:block;
 }
-.port-card:hover img{transform:scale(1.05)}
+.port-card:hover img{transform:scale(1.04)}
 .port-card-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.1) 55%,transparent 100%);
+  background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.08) 50%,transparent 100%);
   display:flex;flex-direction:column;justify-content:flex-end;
-  padding:1.4rem 1.3rem;
+  padding:1.4rem 1.5rem 1.6rem;
 }
 .port-card-title{
-  font-size:1.1rem;font-weight:700;color:#fff;
-  line-height:1.25;margin-bottom:.55rem;
+  font-size:1.25rem;font-weight:700;color:#fff;
+  line-height:1.25;margin-bottom:.6rem;
 }
-.port-card-tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.port-card-tags{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
 .port-card-tag{
-  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:#a8d49f;
+  font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);
 }
-.port-card-tag+.port-card-tag::before{content:'·';margin-right:.5rem;color:rgba(255,255,255,.4)}
+.port-card-tag.green{color:#6ecf6b}
 
 /* WHY US */
 .whyus{background:#fff}
@@ -324,7 +331,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
   .services-grid,.why-grid{grid-template-columns:1fr 1fr}
   .quote-inner{grid-template-columns:1fr;gap:2.5rem}
   .footer-inner{grid-template-columns:1fr 1fr}
-  .port-card{flex:0 0 calc(50% - .6rem)}
+  .port-card{flex:0 0 calc(50% - 3px)}
 }
 @media(max-width:600px){
   .topbar{display:none}
@@ -335,9 +342,9 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
   .footer-inner{grid-template-columns:1fr}
   section{padding:3.5rem 1.2rem}
   .trust{gap:1.5rem;padding:1rem 1.2rem}
-  .port-card{flex:0 0 calc(100% - 0rem)}
-  .port-track-outer{padding:0 3rem}
-  .port-arrow{width:38px;height:38px;font-size:1rem}
+  .port-card{flex:0 0 100%;height:300px}
+  .port-arrow{width:42px}
+  .port-arrow-btn{width:34px;height:34px;font-size:1.1rem}
 }
 </style>
 </head>
@@ -475,7 +482,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
     <h2 class="section-h">Portfolio</h2>
   </div>
   <div class="port-carousel-wrap">
-    <button class="port-arrow port-arrow-prev" id="portPrev">&#8249;</button>
+    <div class="port-arrow"><button class="port-arrow-btn" id="portPrev">&#8249;</button></div>
     <div class="port-track-outer">
       <div class="port-track" id="portTrack">
 
@@ -485,7 +492,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
             <div class="port-card-title">Sherwood Forest Drive — Full Season</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Mowing</span>
-              <span class="port-card-tag">Residential</span>
+              <span class="port-card-tag green">Residential</span>
             </div>
           </div>
         </div>
@@ -496,7 +503,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
             <div class="port-card-title">Reynolda Road Weekly Maintenance</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Mowing &amp; Edging</span>
-              <span class="port-card-tag">Residential</span>
+              <span class="port-card-tag green">Residential</span>
             </div>
           </div>
         </div>
@@ -507,7 +514,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
             <div class="port-card-title">Stratford Hills — Fertilization Program</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Fertilization</span>
-              <span class="port-card-tag">Weed Control</span>
+              <span class="port-card-tag green">Weed Control</span>
             </div>
           </div>
         </div>
@@ -518,7 +525,7 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
             <div class="port-card-title">Buena Vista — Fall Cleanup</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Leaf Removal</span>
-              <span class="port-card-tag">Seasonal</span>
+              <span class="port-card-tag green">Seasonal</span>
             </div>
           </div>
         </div>
@@ -529,25 +536,25 @@ footer{background:#1c3a18;color:rgba(255,255,255,.8);padding:3.5rem 2rem 2rem}
             <div class="port-card-title">West Salem — Overseeding &amp; Aeration</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Overseeding</span>
-              <span class="port-card-tag">Aeration</span>
+              <span class="port-card-tag green">Aeration</span>
             </div>
           </div>
         </div>
 
         <div class="port-card">
-          <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&q=80&auto=format&fit=crop&crop=bottom" alt="Green lawn">
+          <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&q=80&auto=format&fit=crop&crop=entropy" alt="Green lawn">
           <div class="port-card-overlay">
             <div class="port-card-title">Country Club Hills — Maintenance Plan</div>
             <div class="port-card-tags">
               <span class="port-card-tag">Full Maintenance</span>
-              <span class="port-card-tag">Ongoing</span>
+              <span class="port-card-tag green">Ongoing</span>
             </div>
           </div>
         </div>
 
       </div>
     </div>
-    <button class="port-arrow port-arrow-next" id="portNext">&#8250;</button>
+    <div class="port-arrow"><button class="port-arrow-btn" id="portNext">&#8250;</button></div>
   </div>
 </section>
 
